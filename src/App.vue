@@ -11,39 +11,27 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import axios from "axios";
 
-import SearchBox from "./components/SearchBox.vue";
+import SearchBox from "@/components/SearchBox.vue";
 export default {
     name: "App",
     components: { SearchBox },
     data() {
         return {
-            // countries: [],
+            countries: [],
         };
     },
-    computed: {
-        ...mapState({
-            countries: state => state.countries,
-        }),
+    async created() {
+        try {
+            const response = await axios.get("https://restcountries.eu/rest/v2/all?fields=name;flag;alpha3Code;capital;region;subregion;");
+            if (response.status === 200) {
+                return (this.countries = response.data);
+            } else return null;
+        } catch (error) {
+            console.error(error);
+        }
     },
-    methods: {
-        ...mapActions(["GetCountries"]),
-    },
-    created() {
-        this.GetCountries();
-    },
-    // async created() {
-    //     try {
-    //         const response = await axios.get("https://restcountries.eu/rest/v2/all?fields=name;flag;alpha3Code;capital;region;subregion;");
-    //         if (response.status === 200) {
-    //             console.log("response countries:", response.data);
-    //             return (this.countries = response.data);
-    //         } else return null;
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // },
 };
 </script>
 
