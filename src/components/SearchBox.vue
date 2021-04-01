@@ -116,7 +116,6 @@ export default {
             this.arrowarrowCounter = -1;
             this.flags.resultsList = false;
             this.flags.resultSummary = true;
-            console.log(this.searchInput);
             this.getSelectedCountry(this.searchInput);
         },
         getSelectedCountry(country) {
